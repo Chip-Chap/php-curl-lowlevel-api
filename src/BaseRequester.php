@@ -1,11 +1,11 @@
 <?php
-namespace ChipChap\Core;
+namespace ChipChapLL;
 
 
-use ChipChap\Core\ApiRequest;
-use ChipChap\Core\Credentials;
-use ChipChap\Core\JsonRequester;
-use ChipChap\Core\SignerV1;
+use ChipChapLL\Core\ApiRequest;
+use ChipChapLL\Core\Credentials;
+use ChipChapLL\Core\JsonRequester;
+use ChipChapLL\Core\SignerV1;
 
 class BaseRequester {
 

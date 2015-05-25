@@ -1,5 +1,5 @@
 <?php
-namespace ChipChap\Core;
+namespace ChipChapLL\Core;
 
 interface Requester{
     public function send(Request $request);
