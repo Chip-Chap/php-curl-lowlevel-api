@@ -1,7 +1,7 @@
 <?php
 namespace ChipChapLL\Core;
 
-class ApiKeys implements Credentials {
+class ApiKey implements Credentials {
 
     private $publicId;
     private $secret;
