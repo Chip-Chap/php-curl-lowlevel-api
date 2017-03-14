@@ -7,26 +7,36 @@ use ChipChapLL\Core\Credentials;
 use ChipChapLL\Core\JsonRequester;
 use ChipChapLL\Core\SignerV1;
 
-class BaseRequester {
+abstract class BaseRequester {
 
-    private $credentials;
-    private $url;
+    /**
+     * @return string
+     */
+    abstract public function getUrl();
 
-    public function __construct(Credentials $credentials, $url){
-        $this->credentials = $credentials;
-        $this->url = $url;
-    }
+    /**
+     * @return Credentials
+     */
+    abstract public function getCredentials();
 
+    /**
+     * @param $function
+     * @param $urlParams
+     * @param $method
+     * @param $params
+     * @param $headers
+     * @return mixed
+     */
     protected function call($function,$urlParams,$method,$params,$headers){
         $plainRequest = new ApiRequest(
-            $this->url,
+            $this->getUrl(),
             $function,
             $urlParams,
             $method,
             $params,
             $headers
         );
-        $signer = new SignerV1($this->credentials);
+        $signer = new SignerV1($this->getCredentials());
         $signedRequest = $signer->sign($plainRequest);
         $requester = new JsonRequester();
         return $requester->send($signedRequest);

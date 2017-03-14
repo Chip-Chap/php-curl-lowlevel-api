@@ -1,13 +1,14 @@
 <?php
 namespace ChipChapLL\Core;
 
-class UserCredentials implements Credentials{
+class ApiKeys implements Credentials {
+
     private $publicId;
     private $secret;
 
     public function __construct($publicId, $secret){
-        $this->publicId=$publicId;
-        $this->secret=$secret;
+        $this->publicId = $publicId;
+        $this->secret = $secret;
     }
     /**
      * @return mixed
