@@ -5,9 +5,7 @@ class JsonRequester implements Requester {
 
     public function send(Request $request){
 
-        $functionUrl =
-            $request->getBaseUrl().'/'
-            .$request->getFunction();
+        $functionUrl = $request->getBaseUrl().$request->getFunction();
 
         if(count($request->getUrlParams())>0)
             $finalUrl = $functionUrl.'?'.http_build_query($request->getUrlParams());
