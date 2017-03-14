@@ -40,6 +40,10 @@ class JsonRequester implements Requester {
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($request->getParams()));
                 break;
+            case "PATCH":
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($request->getParams()));
+                break;
         }
         return json_decode(curl_exec($ch));
     }
