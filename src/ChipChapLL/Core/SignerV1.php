@@ -27,7 +27,7 @@ class SignerV1 implements Signer{
         );
     }
 
-    private function getV1SignatureHeader(){
+    public function getV1SignatureHeader(){
         $nonce = rand();
         $timestamp = time();
         $version = "1";
