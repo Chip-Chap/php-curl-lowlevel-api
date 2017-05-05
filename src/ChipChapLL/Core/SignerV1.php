@@ -13,10 +13,7 @@ class SignerV1 implements Signer{
     public function sign(Request $request)
     {
         $currentHeaders = $request->getHeaders();
-        $signatureHeader = $this->getV1SignatureHeader(
-            $this->credentials->getPublicId(),
-            base64_decode($this->credentials->getSecret())
-        );
+        $signatureHeader = $this->getV1SignatureHeader();
 
         $currentHeaders['x-signature']=$signatureHeader;
 
@@ -30,18 +27,22 @@ class SignerV1 implements Signer{
         );
     }
 
-    private function getV1SignatureHeader($access_key, $access_secret){
+    private function getV1SignatureHeader(){
         $nonce = rand();
         $timestamp = time();
         $version = "1";
-        $stringToEncrypt = $access_key.$nonce.$timestamp;
-        $signature = hash_hmac('SHA256', $stringToEncrypt, $access_secret);
+        $stringToEncrypt = $this->credentials->getPublicId().$nonce.$timestamp;
+        $signature = $this->signRaw($stringToEncrypt);
         return 'Signature '
-        ."access-key=\"$access_key\", "
+        ."access-key=\"" . $this->credentials->getPublicId() . "\", "
         ."nonce=\"$nonce\", "
         ."timestamp=\"$timestamp\", "
         ."version=\"$version\", "
         ."signature=\"$signature\"";
 
+    }
+
+    public function signRaw($data){
+        return hash_hmac('SHA256', $data, base64_decode($this->credentials->getSecret()));
     }
 }
