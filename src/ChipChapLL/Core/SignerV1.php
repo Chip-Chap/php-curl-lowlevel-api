@@ -4,12 +4,17 @@ namespace ChipChapLL\Core;
 
 class SignerV1 implements Signer{
 
-    private $credentials;
+    /** @var Credentials $credentials */
+    protected $credentials;
 
     public function __construct(Credentials $credentials){
         $this->credentials=$credentials;
     }
 
+    /**
+     * @param Request $request
+     * @return ApiRequest
+     */
     public function sign(Request $request)
     {
         $currentHeaders = $request->getHeaders();
@@ -27,6 +32,9 @@ class SignerV1 implements Signer{
         );
     }
 
+    /**
+     * @return string
+     */
     public function getV1SignatureHeader(){
         $nonce = rand();
         $timestamp = time();
@@ -42,6 +50,10 @@ class SignerV1 implements Signer{
 
     }
 
+    /**
+     * @param $data
+     * @return string
+     */
     public function signRaw($data){
         return hash_hmac('SHA256', $data, base64_decode($this->credentials->getSecret()));
     }
